@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LUMA COLLECTION </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Luma Collection - where accessories keep memories">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #FF6B8B; /* Soft Pink */
+            --secondary: #1A1A1A; /* Dark Background */
+            --accent: #FFFFFF; /* White Text */
+            --glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--secondary);
+            color: var(--accent);
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Mouse Trail Animation */
+        .mouse-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .trail-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 107, 139, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* Minimal Navigation */
+        .minimal-nav {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-brand span {
+            color: var(--primary);
+        }
+
+        /* Hero Section - Minimal */
+        .minimal-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero-title span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero-btn {
+            padding: 1rem 2rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-btn:hover {
+            background: var(--primary);
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-card.animate {
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 107, 139, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .service-text {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+        }
+
+        .service-link:hover {
+            border-bottom-color: var(--primary);
+            gap: 0.8rem;
+        }
+
+        /* Connect Section */
+        .connect-section {
+            padding: 6rem 2rem;
+            background: rgba(255, 107, 139, 0.03);
+        }
+
+        .connect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .connect-card {
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(255, 107, 139, 0.05));
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .connect-card.animate {
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .connect-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.15), rgba(255, 107, 139, 0.1));
+        }
+
+        .connect-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 107, 139, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .connect-card:hover .connect-icon {
+            background: rgba(255, 107, 139, 0.25);
+            transform: scale(1.1);
+        }
+
+        .connect-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .connect-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .connect-link {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .connect-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 139, 0.3);
+        }
+
+        /* Minimal Footer */
+        .minimal-footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        .footer-brand {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-brand span {
+            color: var(--primary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 107, 139, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .floating-1 {
+            top: 20%;
+            right: 10%;
+            animation: float 20s infinite linear;
+        }
+
+        .floating-2 {
+            bottom: 20%;
+            left: 10%;
+            animation: float 25s infinite linear reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(30px, 30px) rotate(90deg) scale(1.1); }
+            50% { transform: translate(0, 60px) rotate(180deg) scale(1); }
+            75% { transform: translate(-30px, 30px) rotate(270deg) scale(0.9); }
+            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .services-grid,
+            .connect-grid {
+                padding: 4rem 1rem;
+            }
+            
+            .floating-element {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .minimal-nav {
+                left: 1rem;
+                top: 1rem;
+            }
+            
+            .service-card,
+            .connect-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Mouse Trail -->
+    <div class="mouse-trail"></div>
+
+    <!-- Navigation -->
+    <nav class="minimal-nav">
+        <a href="#" class="nav-brand">
+            LUMA<span>COLLECTION</span>
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="minimal-hero">
+        <div class="floating-element floating-1"></div>
+        <div class="floating-element floating-2"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Minimal Design,<br>
+                Maximum <span>Quality</span>
+            </h1>
+            <p class="hero-subtitle">
+                 Where every piece tells a story of intentional design. We craft not just products, 
+                but experiences that speak in whispers, not shouts.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="#services" class="hero-btn">
+                    <i class="fas fa-gem"></i> Explore Services
+                </a>
+                <a href="#connect" class="hero-btn">
+                    <i class="fas fa-comments"></i> Join Community
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="services-grid">
+            <div class="service-card" data-delay="0">
+                <div class="service-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h3 class="service-title">Essential Design</h3>
+                <p class="service-text">
+                    Your experience extends far beyond the purchase. We provide thoughtful guidance, 
+                    aftercare, and support throughout your journey with us. 
+                    
+                </p>
+                <a href="#" class="service-link">
+                    Discover <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="service-card" data-delay="0.1">
+                <div class="service-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="service-title">Complete Care</h3>
+                <p class="service-text">
+                    Years of experience building relationships based on trust, 
+                    reliability, and exceptional customer service.
+                </p>
+                <a href="#" class="service-link">
+                    Click here <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="service-card" data-delay="0.2">
+                <div class="service-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="service-title">Seamless Resolution</h3>
+                <p class="service-text">
+                    We make support feel effortless. Quick, efficient solutions that match the 
+                    elegance of our designs.
+                </p>
+                <a href="#" class="service-link">
+                    Get Support <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connect Section -->
+    <section id="connect" class="connect-section">
+        <div class="connect-grid">
+            <div class="connect-card" data-delay="0">
+                <div class="connect-icon">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <h3 class="connect-title">Telegram Channel</h3>
+                <p class="connect-text">
+                    Stay updated with our latest collections, exclusive offers, 
+                    and community announcements.
+                </p>
+                <a href="https://t.me/lumacollection" class="connect-link" target="_blank">
+                    Join Channel
+                </a>
+            </div>
+
+            <div class="connect-card" data-delay="0.1">
+                <div class="connect-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <h3 class="connect-title">WhatsApp Group</h3>
+                <p class="connect-text">
+                    Connect directly with our team and other members for 
+                    instant communication and support.
+                </p>
+                <a href="https://whatsapp.com/channel/0029Vb6qXbK2phHNDubWTw2N" class="connect-link" target="_blank">
+                    Join Group
+                </a>
+            </div>
+
+            <div class="connect-card" data-delay="0.2">
+                <div class="connect-icon">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <h3 class="connect-title">Instagram</h3>
+                <p class="connect-text">
+                    Follow our journey through visual storytelling and 
+                    behind-the-scenes content.
+                </p>
+                <a href="https://www.instagram.com/luma._collection?igsh=NnBhbTFxbHBsbWRr" class="connect-link" target="_blank">
+                    Follow Us
+                </a>
+            </div>
+
+            <div class="connect-card" data-delay="0.3">
+                <div class="connect-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="connect-title">Telegram Bot</h3>
+                <p class="connect-text">
+                    Access instant information, get quick responses, 
+                    and browse products 24/7.
+                </p>
+                <a href="https://t.me/LumaCollection_bot" class="connect-link" target="_blank">
+                    Open Bot
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="minimal-footer">
+        <div class="footer-brand">LU<span>MA</span></div>
+        <p>Where minimalism meets luxury</p>
+        
+        <div class="footer-links">
+            <a href="#services">Services</a>
+            <a href="#connect">Connect</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact</a>
+        </div>
+        
+        <p>© 2025 LUMA COLLECTION. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mouse Trail Animation
+        const trail = document.querySelector('.mouse-trail');
+        const trailDots = [];
+        const dotCount = 20;
+        let mouseX = 0;
+        let mouseY = 0;
+        let trailVisible = false;
+
+        // Create trail dots
+        for (let i = 0; i < dotCount; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'trail-dot';
+            dot.style.opacity = 0;
+            document.body.appendChild(dot);
+            trailDots.push({
+                element: dot,
+                x: 0,
+                y: 0,
+                opacity: 0
+            });
+        }
+
+        // Main mouse trail
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Update main trail dot
+            trail.style.left = `${mouseX - 3}px`;
+            trail.style.top = `${mouseY - 3}px`;
+            trail.style.opacity = '1';
+            
+            if (!trailVisible) {
+                trailVisible = true;
+            }
+            
+            // Update trail dots with delay
+            trailDots.forEach((dot, index) => {
+                setTimeout(() => {
+                    dot.x = mouseX - 2;
+                    dot.y = mouseY - 2;
+                    dot.opacity = 1 - (index / dotCount);
+                    
+                    dot.element.style.left = `${dot.x}px`;
+                    dot.element.style.top = `${dot.y}px`;
+                    dot.element.style.opacity = dot.opacity;
+                    
+                    // Fade out
+                    setTimeout(() => {
+                        dot.element.style.opacity = '0';
+                    }, 100);
+                }, index * 30);
+            });
+        });
+
+        // Hide trail when mouse leaves window
+        document.addEventListener('mouseleave', () => {
+            trail.style.opacity = '0';
+            trailDots.forEach(dot => {
+                dot.element.style.opacity = '0';
+            });
+            trailVisible = false;
+        });
+
+        // Show trail when mouse enters window
+        document.addEventListener('mouseenter', () => {
+            if (trailVisible) {
+                trail.style.opacity = '1';
+            }
+        });
+
+        // Add trail to interactive elements
+        document.querySelectorAll('a, button, .service-card, .connect-card').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                trail.style.transform = 'scale(1.5)';
+                trail.style.background = 'var(--accent)';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                trail.style.transform = 'scale(1)';
+                trail.style.background = 'var(--primary)';
+            });
+        });
+
+        // Scroll animations
+        const animatedElements = document.querySelectorAll('.service-card, .connect-card');
+        
+        const elementObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-delay') || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, delay * 1000);
+                    elementObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        animatedElements.forEach(el => elementObserver.observe(el));
+
+        // Floating elements animation
+        const floatingElements = document.querySelectorAll('.floating-element');
+        floatingElements.forEach(el => {
+            el.style.animationDuration = (20 + Math.random() * 10) + 's';
+        });
+
+        // Smooth hover effects
+        document.querySelectorAll('.service-card, .connect-card').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Interactive cursor effect
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 10;
+            const y = (e.clientY / window.innerHeight) * 10;
+            
+            floatingElements.forEach(el => {
+                el.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Add subtle hover animation to links
+        document.querySelectorAll('.service-link, .connect-link, .hero-btn').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
